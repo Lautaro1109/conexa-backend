@@ -20,6 +20,11 @@ export class LoginService {
   async register(userObject: LoginDto): Promise<User> {
     const { password } = userObject;
 
+    const user = await this.userModel.findOne({ mail: userObject.mail });
+
+    if (user)
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+
     const hashedPassword = await hash(password, 10);
 
     userObject = {
