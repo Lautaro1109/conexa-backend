@@ -8,15 +8,20 @@ describe('BusinessController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [BusinessController],
-      providers: [BusinessService],
+      providers: [
+        {
+          provide: BusinessService,
+          useValue: { getUserListMock: jest.fn() },
+        },
+      ],
     }).compile();
 
     businessController = app.get<BusinessController>(BusinessController);
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(businessController.getHello()).toBe('Hello World!');
+    it('should be defined', () => {
+      expect(businessController).toBeDefined();
     });
   });
 });
