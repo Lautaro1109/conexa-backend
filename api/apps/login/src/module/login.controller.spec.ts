@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { User } from '../schema/user.schema';
+import { User, userWithToken } from '../schema/user.schema';
 import { LoginController } from './login.controller';
 import { LoginService } from './login.service';
 
@@ -49,6 +49,29 @@ describe('AppController', () => {
       } catch (error) {
         expect(error).toBeTruthy();
       }
+    });
+
+    it('should call login and return user with token', async () => {
+      const loginMockedData: userWithToken = {
+        user: {
+          mail: 'conexa1@conexa.com',
+          password: '123',
+        },
+        token: 'token',
+      };
+
+      jest.spyOn(loginController, 'login').mockImplementation(() => {
+        return Promise.resolve(loginMockedData);
+      });
+
+      const res = await loginController.login({
+        mail: 'conexa1@conexa.com',
+        password: '123456',
+      });
+
+      expect(res).toBeDefined();
+      expect(res.user).toBeDefined();
+      expect(res.token).toBeDefined();
     });
   });
 });

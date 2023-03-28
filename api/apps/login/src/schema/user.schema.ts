@@ -3,6 +3,11 @@ import { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
+export type userWithToken = {
+  user: User;
+  token: string;
+};
+
 @Schema()
 export class User {
   @Prop({
