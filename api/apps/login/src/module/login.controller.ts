@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Query } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Query, Get } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LoginDto } from '../dto/login.dto';
 import { LoginService } from './login.service';
@@ -20,7 +20,7 @@ export class LoginController {
     return this.loginService.login(userObject);
   }
 
-  @Post('listUsers')
+  @Get('listUsers')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   listUsers(
